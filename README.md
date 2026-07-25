@@ -2,7 +2,7 @@
 
 <img src="assets/wordmark.svg" alt="Auditor Zero" width="460">
 
-### AI document auditing you can actually trust — every finding is replayable and sealed in a tamper-proof, cryptographically keyed decision ledger.
+### AI document auditing you can actually trust, every finding is replayable and sealed in a tamper-proof, cryptographically keyed decision ledger.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node-%E2%89%A518-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -173,11 +173,6 @@ src/
 tests/                          # Black-box chain, ingestion, and auth tests
 ```
 
-## Security notes
-
-- `.env` is git-ignored; commit only `.env.example`. Never commit real keys.
-- The Black Box is keyed with a server-held secret (`LEDGER_SECRET`); rotate it if exposed.
-- The tamper endpoint exists purely to demonstrate detection and is disabled in production unless explicitly allowed.
 
 ## Roadmap
 
@@ -187,4 +182,4 @@ tests/                          # Black-box chain, ingestion, and auth tests
 
 ## License
 
-[MIT](./LICENSE) © Challapalli Sathwik
+[MIT](./LICENSE) © Challapalli Sathwik 
