@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.next/
+public/audit-results.bundle.js
+
+# Secrets — never commit real values; use .env.example as the template
+.env
+.env.local
+.env.*.local
+
+# SQLite database + WAL sidecars
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# OS / editor cruft
+.DS_Store
+*.log
