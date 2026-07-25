@@ -10,7 +10,7 @@
 
 **NitroStack Hackathon · Enterprise AI & Workplace Automation Track**
 
-*Every contradiction. Every silent omission. Sealed in a tamper-proof, cryptographically keyed decision ledger — and replayable, step by step, on demand.*
+*Every contradiction. Every silent omission. Sealed in a tamper-proof, cryptographically keyed decision ledger and replayable, step by step, on demand.*
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![NitroStack](https://img.shields.io/badge/Built_on-NitroStack-8B5CF6?style=for-the-badge)](https://nitrostack.ai)
@@ -26,9 +26,9 @@
 
 ## The Problem
 
-> *"The 2025 filing quietly dropped last year's risk disclosure about supplier concentration. Nobody caught it — until the quarter it mattered."*
+> *"The 2025 filing quietly dropped last year's risk disclosure about supplier concentration. Nobody caught it, until the quarter it mattered."*
 
-This is the story behind every silent disclosure failure, and it is structurally invisible to every document tool built today. Search answers *"what does this say."* It cannot answer *"what did this used to say, and why did it stop"* — or *"what does this say that our own other policy quietly contradicts."*
+This is the story behind every silent disclosure failure, and it is structurally invisible to every document tool built today. Search answers *"what does this say."* It cannot answer *"what did this used to say, and why did it stop"* or *"what does this say that our own other policy quietly contradicts."*
 
 | Pain Point | What It Costs |
 |---|---|
@@ -42,7 +42,7 @@ This is the story behind every silent disclosure failure, and it is structurally
 
 ## What Makes It Different — In One Sentence
 
-> *Every other AI review tool asks you to trust its output. Auditor Zero shows you the receipts — cryptographically, for every single decision it made.*
+> *Every other AI review tool asks you to trust its output. Auditor Zero shows you the receipts, cryptographically, for every single decision it made.*
 
 ---
 
@@ -51,10 +51,10 @@ This is the story behind every silent disclosure failure, and it is structurally
 | | |
 |---|---|
 |  **Four complementary detectors** | Deterministic numeric-conflict detection, LLM-driven semantic comparison, cross-version change detection, and category-disappearance detection — each finding tagged with *how* it was found, so nothing is a black box to the user |
-|  **Cryptographically keyed provenance** | `HMAC-SHA256(secret, prevHash + payload)` per decision step. The chain is *keyed*, not just hashed — an attacker who edits a stored record cannot re-seal the chain without the server's secret. **Tamper-proof, not merely tamper-evident.** |
+|  **Cryptographically keyed provenance** | `HMAC-SHA256(secret, prevHash + payload)` per decision step. The chain is *keyed*, not just hashed, an attacker who edits a stored record cannot re-seal the chain without the server's secret. **Tamper-proof, not merely tamper-evident.** |
 |  **Non-blocking, live-progress audits** | Analysis runs asynchronously with bounded concurrency; findings stream into the UI as they're discovered, not after a long wait |
 |  **Explainable by design** | Every judgment ships with its reasoning, visibly — nothing is a bare confidence score with no justification |
-|  **One source of truth, two protocols** | Every operation is defined once and exposed identically as both an **MCP tool** and a **REST endpoint** — build for agents and humans from the same code |
+|  **One source of truth, two protocols** | Every operation is defined once and exposed identically as both an **MCP tool** and a **REST endpoint**, build for agents and humans from the same code |
 |  **A real product, not a script** | Full auth, a modular dashboard, one-click demo seeding, a replay drawer, live integrity verification, and light/dark themes |
 
 ---
@@ -70,10 +70,10 @@ A plain hash chain only proves *something* was recorded in order — anyone who 
 `verify_replay_chain` doesn't trust its own stored state — it recomputes every link from `GENESIS` forward and reports the exact record where the chain breaks, if it ever does. Nothing is taken on faith, including the system's own prior output.
 
 **3 · Detection Is Layered, Not Single-Shot**
-Deterministic numeric-conflict detection runs independently of the LLM's semantic judgment — a cheap, fast pre-filter that catches hard numeric contradictions (`90 days` vs. `180 days`) even in cases where negation-word matching alone would miss them entirely. The system doesn't rely on a single method to be right.
+Deterministic numeric-conflict detection runs independently of the LLM's semantic judgment, a cheap, fast pre-filter that catches hard numeric contradictions (`90 days` vs. `180 days`) even in cases where negation-word matching alone would miss them entirely. The system doesn't rely on a single method to be right.
 
 **4 · Nothing Is a Bare Score**
-Every severity and confidence rating ships with the reasoning that produced it. A judge, an auditor, or a compliance officer never has to take a number on faith — they can read exactly why the system decided what it decided.
+Every severity and confidence rating ships with the reasoning that produced it. A judge, an auditor, or a compliance officer never has to take a number on faith, they can read exactly why the system decided what it decided.
 
 ---
 
@@ -98,7 +98,7 @@ flowchart LR
     BB --> VF{{verify_replay_chain<br/>replay &amp; verify}}
 ```
 
-Documents are grouped into **version lineages** ordered by a monotonic ingestion sequence — not by parsing version strings — so `v1/v2` vs. `1.0/1.10` can never silently break a diff. Within a lineage, consecutive versions are compared: a category that's vanished entirely becomes a **disappearance**; a materially changed obligation becomes a **cross-version contradiction**. Across different documents, obligation clauses are compared pairwise. Findings are deduplicated by a per-audit signature, so the same underlying issue is surfaced once — never spammed across multiple detectors.
+Documents are grouped into **version lineages** ordered by a monotonic ingestion sequence, not by parsing version strings so `v1/v2` vs. `1.0/1.10` can never silently break a diff. Within a lineage, consecutive versions are compared: a category that's vanished entirely becomes a **disappearance**; a materially changed obligation becomes a **cross-version contradiction**. Across different documents, obligation clauses are compared pairwise. Findings are deduplicated by a per-audit signature, so the same underlying issue is surfaced once, never spammed across multiple detectors.
 
 ### Detection methods
 
@@ -123,13 +123,13 @@ Every agent step calls `logDecision({ auditId, agentName, input, output })`, whi
 
 `verify_replay_chain` recomputes every link from `GENESIS` forward using the server-held key, and returns `verified: false` plus the exact `brokenAt` index the moment a stored hash doesn't match. Because the chain is **keyed** (HMAC, not a plain hash), an attacker cannot simply recompute a fresh, valid-looking chain after editing a record — without the secret, no forged chain will ever verify. This is the difference between "we kept a log" and **"we can cryptographically prove this reasoning chain was never altered."**
 
-Try it yourself: load the demo data, run an audit, open a finding → **Replay → Verify integrity**. Then flip on **Dev tools**, tamper a record, and watch verification catch it — and tell you exactly where the chain broke.
+Try it yourself: load the demo data, run an audit, open a finding → **Replay → Verify integrity**. Then flip on **Dev tools**, tamper a record, and watch verification catch it and tell you exactly where the chain broke.
 
 ---
 
 ## Built on NitroStack
 
-Auditor Zero is architected end-to-end on **NitroStack's** agent and MCP tooling — every audit operation (ingestion, contradiction detection, disappearance detection, severity scoring, replay, verification) is defined once as a NitroStack tool and exposed identically to both human users (REST + web dashboard) and AI orchestrators (MCP stdio server), so the same reasoning pipeline any human clicks through in the dashboard is exactly what an autonomous agent calls under the hood.
+Auditor Zero is architected end-to-end on **NitroStack's** agent and MCP tooling, every audit operation (ingestion, contradiction detection, disappearance detection, severity scoring, replay, verification) is defined once as a NitroStack tool and exposed identically to both human users (REST + web dashboard) and AI orchestrators (MCP stdio server), so the same reasoning pipeline any human clicks through in the dashboard is exactly what an autonomous agent calls under the hood.
 
 ---
 
@@ -278,7 +278,7 @@ Built in 24 hours by:
 
 **AUDITOR ZERO · NitroStack Hackathon · BFSI & Enterprise AI Track**
 
-*Not just another AI reading your documents. An agent that cross-examines them — and can prove, cryptographically, exactly how it knows.*
+*Not just another AI reading your documents. An agent that cross-examines them, and can prove, cryptographically, exactly how it knows.*
 
 **[MIT License](./LICENSE)**
 
