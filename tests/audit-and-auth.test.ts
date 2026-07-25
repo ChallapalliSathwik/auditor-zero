@@ -1,10 +1,5 @@
 import { describe, it, expect } from "vitest";
-import fs from "fs";
-
-process.env.DATABASE_PATH = "./data/test-audit-auth.db";
-process.env.JWT_SECRET = "test-secret";
-if (fs.existsSync(process.env.DATABASE_PATH)) fs.unlinkSync(process.env.DATABASE_PATH);
-
+// DB path + secrets are injected via vitest.config.ts (in-memory, isolated per file).
 import { ingestDocument, getDoc, listDocs } from "../src/modules/audit/audit.service";
 import { signup, login } from "../src/auth/auth.service";
 

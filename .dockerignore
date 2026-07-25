@@ -1,0 +1,21 @@
+# Never send secrets or host-built artifacts into the Docker build context.
+.env
+.env.*
+!.env.example
+
+# Host node_modules contains platform-native binaries (e.g. better-sqlite3 built
+# for macOS) — must be rebuilt inside the Linux image, never copied in.
+node_modules
+
+# Build outputs (regenerated inside the image)
+dist
+public/audit-results.bundle.js
+
+# Local data / VCS / tooling
+data
+.git
+.github
+*.log
+.DS_Store
+npm-debug.log*
+coverage

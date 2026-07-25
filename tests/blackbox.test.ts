@@ -1,9 +1,5 @@
 import { describe, it, expect, beforeAll } from "vitest";
-import fs from "fs";
-
-process.env.DATABASE_PATH = "./data/test-blackbox.db";
-if (fs.existsSync(process.env.DATABASE_PATH)) fs.unlinkSync(process.env.DATABASE_PATH);
-
+// DB path + secrets are injected via vitest.config.ts (in-memory, isolated per file).
 import { db } from "../src/db";
 import { logDecision, verifyReplayChain, _debugTamperRecord, getLedger } from "../src/modules/audit/blackbox.service";
 
