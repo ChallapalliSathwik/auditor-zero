@@ -32,15 +32,15 @@ This is the story behind every silent disclosure failure, and it is structurally
 
 | Pain Point | What It Costs |
 |---|---|
-| **Manual cross-document review** | Compliance teams read filings sequentially, once a quarter — contradictions and omissions between documents are invisible by construction |
+| **Manual cross-document review** | Compliance teams read filings sequentially, once a quarter , contradictions and omissions between documents are invisible by construction |
 | **No memory across versions** | A risk factor, a security obligation, a disclosed commitment can vanish between one version and the next with nobody noticing until it's already too late |
-| **No traceable reasoning** | When an AI tool *does* flag something, nobody can verify — to a skeptical auditor or a court — exactly how it reached that conclusion, or whether the record was altered afterward |
+| **No traceable reasoning** | When an AI tool *does* flag something, nobody can verify , to a skeptical auditor or a court , exactly how it reached that conclusion, or whether the record was altered afterward |
 
-**Auditor Zero** closes this gap — autonomously, with every finding sealed in a cryptographic ledger that can be replayed and verified on demand.
+**Auditor Zero** closes this gap , autonomously, with every finding sealed in a cryptographic ledger that can be replayed and verified on demand.
 
 ---
 
-## What Makes It Different — In One Sentence
+## What Makes It Different , In One Sentence
 
 > *Every other AI review tool asks you to trust its output. Auditor Zero shows you the receipts, cryptographically, for every single decision it made.*
 
@@ -50,10 +50,10 @@ This is the story behind every silent disclosure failure, and it is structurally
 
 | | |
 |---|---|
-|  **Four complementary detectors** | Deterministic numeric-conflict detection, LLM-driven semantic comparison, cross-version change detection, and category-disappearance detection — each finding tagged with *how* it was found, so nothing is a black box to the user |
+|  **Four complementary detectors** | Deterministic numeric-conflict detection, LLM-driven semantic comparison, cross-version change detection, and category-disappearance detection , each finding tagged with *how* it was found, so nothing is a black box to the user |
 |  **Cryptographically keyed provenance** | `HMAC-SHA256(secret, prevHash + payload)` per decision step. The chain is *keyed*, not just hashed, an attacker who edits a stored record cannot re-seal the chain without the server's secret. **Tamper-proof, not merely tamper-evident.** |
 |  **Non-blocking, live-progress audits** | Analysis runs asynchronously with bounded concurrency; findings stream into the UI as they're discovered, not after a long wait |
-|  **Explainable by design** | Every judgment ships with its reasoning, visibly — nothing is a bare confidence score with no justification |
+|  **Explainable by design** | Every judgment ships with its reasoning, visibly , nothing is a bare confidence score with no justification |
 |  **One source of truth, two protocols** | Every operation is defined once and exposed identically as both an **MCP tool** and a **REST endpoint**, build for agents and humans from the same code |
 |  **A real product, not a script** | Full auth, a modular dashboard, one-click demo seeding, a replay drawer, live integrity verification, and light/dark themes |
 
@@ -61,13 +61,13 @@ This is the story behind every silent disclosure failure, and it is structurally
 
 ## What Makes This Actually Trustworthy
 
-Most "AI audit" tools are a single LLM call with a confidence score bolted on — the user is still asked to just believe it. Auditor Zero's trust model is architectural, not cosmetic.
+Most "AI audit" tools are a single LLM call with a confidence score bolted on , the user is still asked to just believe it. Auditor Zero's trust model is architectural, not cosmetic.
 
 **1 · The Chain Is Keyed, Not Just Hashed**
-A plain hash chain only proves *something* was recorded in order — anyone who edits a record can simply recompute a new, internally-consistent chain from that point forward. Auditor Zero's chain is sealed with `HMAC-SHA256` under a server-held secret. Without that secret, no forged chain will ever reproduce the stored hashes. This is the difference between *"we kept a log"* and *"we can cryptographically prove this reasoning was never altered."*
+A plain hash chain only proves *something* was recorded in order , anyone who edits a record can simply recompute a new, internally-consistent chain from that point forward. Auditor Zero's chain is sealed with `HMAC-SHA256` under a server-held secret. Without that secret, no forged chain will ever reproduce the stored hashes. This is the difference between *"we kept a log"* and *"we can cryptographically prove this reasoning was never altered."*
 
 **2 · Every Finding Is Independently Replayable**
-`verify_replay_chain` doesn't trust its own stored state — it recomputes every link from `GENESIS` forward and reports the exact record where the chain breaks, if it ever does. Nothing is taken on faith, including the system's own prior output.
+`verify_replay_chain` doesn't trust its own stored state , it recomputes every link from `GENESIS` forward and reports the exact record where the chain breaks, if it ever does. Nothing is taken on faith, including the system's own prior output.
 
 **3 · Detection Is Layered, Not Single-Shot**
 Deterministic numeric-conflict detection runs independently of the LLM's semantic judgment, a cheap, fast pre-filter that catches hard numeric contradictions (`90 days` vs. `180 days`) even in cases where negation-word matching alone would miss them entirely. The system doesn't rely on a single method to be right.
@@ -104,24 +104,24 @@ Documents are grouped into **version lineages** ordered by a monotonic ingestion
 
 | Method | Kind | How it fires |
 |---|---|---|
-| **Numeric conflict** | deterministic | Two topically related clauses assert different values for the same unit (days, hours, %, $) — catches `90 days` vs. `180 days` even with zero negation words |
+| **Numeric conflict** | deterministic | Two topically related clauses assert different values for the same unit (days, hours, %, $) , catches `90 days` vs. `180 days` even with zero negation words |
 | **Semantic (LLM)** | model-driven | Two obligation clauses from different documents are judged contradictory, gated by a topic-overlap check so unrelated clauses are never wastefully compared |
 | **Cross-version change** | model-driven | An obligation still present in the new version but materially weakened (e.g. VPN *"required"* → *"optional"*) |
 | **Category removed** | model-driven | An entire obligation category present in an older version is completely absent from the newer one |
 
 ---
 
-## The Black Box — a cryptographically keyed decision ledger
+## The Black Box , a cryptographically keyed decision ledger
 
 This is the part nobody else has built.
 
 Every agent step calls `logDecision({ auditId, agentName, input, output })`, which:
 
-1. Reads the hash of the last ledger entry for that audit — `"GENESIS"` if this is the first
+1. Reads the hash of the last ledger entry for that audit , `"GENESIS"` if this is the first
 2. Computes `hash = HMAC-SHA256(LEDGER_SECRET, prevHash + JSON.stringify({ agentName, input, output, timestamp }))`
 3. Appends the record to `decision_records`, keyed by a monotonic sequence per audit
 
-`verify_replay_chain` recomputes every link from `GENESIS` forward using the server-held key, and returns `verified: false` plus the exact `brokenAt` index the moment a stored hash doesn't match. Because the chain is **keyed** (HMAC, not a plain hash), an attacker cannot simply recompute a fresh, valid-looking chain after editing a record — without the secret, no forged chain will ever verify. This is the difference between "we kept a log" and **"we can cryptographically prove this reasoning chain was never altered."**
+`verify_replay_chain` recomputes every link from `GENESIS` forward using the server-held key, and returns `verified: false` plus the exact `brokenAt` index the moment a stored hash doesn't match. Because the chain is **keyed** (HMAC, not a plain hash), an attacker cannot simply recompute a fresh, valid-looking chain after editing a record , without the secret, no forged chain will ever verify. This is the difference between "we kept a log" and **"we can cryptographically prove this reasoning chain was never altered."**
 
 Try it yourself: load the demo data, run an audit, open a finding → **Replay → Verify integrity**. Then flip on **Dev tools**, tamper a record, and watch verification catch it and tell you exactly where the chain broke.
 
@@ -186,12 +186,12 @@ docker compose up --build
 |---|---|---|
 | `ANTHROPIC_API_KEY` | ✅ | Powers semantic detection and severity scoring |
 | `JWT_SECRET` | ✅ | Signs auth tokens; also the fallback ledger key if `LEDGER_SECRET` is unset |
-| `LEDGER_SECRET` | recommended | The HMAC key that seals the Black Box — held only by the server |
+| `LEDGER_SECRET` | recommended | The HMAC key that seals the Black Box , held only by the server |
 | `ANTHROPIC_MODEL` | – | Model id (default `claude-sonnet-4-6`) |
 | `PORT` | – | API port (default `8080`) |
 | `DATABASE_PATH` | – | SQLite file path (default `./data/auditor-zero.db`) |
 | `JWT_EXPIRES_IN` | – | Token lifetime (default `8h`) |
-| `ALLOW_TAMPER_DEMO` | – | Enables the dev-only tamper endpoint when `NODE_ENV=production` — keep `false` in real deployments |
+| `ALLOW_TAMPER_DEMO` | – | Enables the dev-only tamper endpoint when `NODE_ENV=production` , keep `false` in real deployments |
 
 ---
 
@@ -206,11 +206,11 @@ All `/api/*` routes except `auth` and `health` require `Authorization: Bearer <t
 | `POST /api/docs` | Ingest a document (optional `previousDocumentId` to link a version lineage) |
 | `GET /api/docs` | List documents |
 | `POST /api/demo/seed` | Ingest the built-in demo document set |
-| `POST /api/audits` | Start an audit — returns immediately, poll for progress |
+| `POST /api/audits` | Start an audit , returns immediately, poll for progress |
 | `GET /api/audits` · `GET /api/audits/:id` | List audits / fetch one with findings and live progress |
 | `GET /api/audits/:id/trail` | The sealed decision ledger (read-only) |
 | `GET /api/audits/:id/verify` | Recompute and verify the keyed hash chain |
-| `POST /api/tamper` | **Dev only** — edit a record in place to demo tamper detection |
+| `POST /api/tamper` | **Dev only** , edit a record in place to demo tamper detection |
 
 The same operations are exposed identically as MCP tools: `ingest_document`, `list_documents`, `seed_demo_documents`, `analyze_document`, `get_audit_result`, `list_audits`, `get_decision_trail`, `verify_replay_chain`, `debug_tamper_record`.
 
@@ -232,7 +232,7 @@ src/
     audit.service.ts            # Detection engine + async orchestration + dedupe
     blackbox.service.ts         # HMAC hash-chain ledger + verify
   mcp/
-    tools.ts                    # Tool definitions (Zod schema + handler) — single source of truth
+    tools.ts                    # Tool definitions (Zod schema + handler) , single source of truth
     server.ts                   # MCP stdio server
   widgets/app/audit-results/
     page.tsx                    # Web app entry
@@ -254,10 +254,10 @@ tests/                          # Black-box chain, ingestion, and auth tests
 
 | Metric | Value |
 |---|---|
-| Detection methods per audit | **4** — numeric, semantic (LLM), cross-version, category-removed |
-| Decision ledger integrity | **Cryptographically keyed** (HMAC-SHA256) — verifiable end-to-end from `GENESIS` |
-| Human judgment required to trust a finding | **Zero** — every step is replayable and independently verifiable |
-| Interfaces exposed per operation | **2** — identical MCP tool and REST endpoint, one source of truth |
+| Detection methods per audit | **4** , numeric, semantic (LLM), cross-version, category-removed |
+| Decision ledger integrity | **Cryptographically keyed** (HMAC-SHA256) , verifiable end-to-end from `GENESIS` |
+| Human judgment required to trust a finding | **Zero** , every step is replayable and independently verifiable |
+| Interfaces exposed per operation | **2** , identical MCP tool and REST endpoint, one source of truth |
 
 ---
 
@@ -276,7 +276,7 @@ Built in 24 hours by:
 
 <div align="center">
 
-**AUDITOR ZERO · NitroStack Hackathon · BFSI & Enterprise AI Track**
+**AUDITOR ZERO · NitroStack Hackathon · Enterprise AI & Workplace Automation Track**
 
 *Not just another AI reading your documents. An agent that cross-examines them, and can prove, cryptographically, exactly how it knows.*
 
