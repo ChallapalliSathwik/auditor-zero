@@ -52,12 +52,12 @@ This is the story behind every silent disclosure failure, and it is structurally
 
 | | |
 |---|---|
-| 🔎 **Four complementary detectors** | Deterministic numeric-conflict detection, LLM-driven semantic comparison, cross-version change detection, and category-disappearance detection — each finding tagged with *how* it was found, so nothing is a black box to the user |
-| 🔐 **Cryptographically keyed provenance** | `HMAC-SHA256(secret, prevHash + payload)` per decision step. The chain is *keyed*, not just hashed — an attacker who edits a stored record cannot re-seal the chain without the server's secret. **Tamper-proof, not merely tamper-evident.** |
-| ⚡ **Non-blocking, live-progress audits** | Analysis runs asynchronously with bounded concurrency; findings stream into the UI as they're discovered, not after a long wait |
-| 🧭 **Explainable by design** | Every judgment ships with its reasoning, visibly — nothing is a bare confidence score with no justification |
-| 🧩 **One source of truth, two protocols** | Every operation is defined once and exposed identically as both an **MCP tool** and a **REST endpoint** — build for agents and humans from the same code |
-| 🖥️ **A real product, not a script** | Full auth, a modular dashboard, one-click demo seeding, a replay drawer, live integrity verification, and light/dark themes |
+|  **Four complementary detectors** | Deterministic numeric-conflict detection, LLM-driven semantic comparison, cross-version change detection, and category-disappearance detection — each finding tagged with *how* it was found, so nothing is a black box to the user |
+|  **Cryptographically keyed provenance** | `HMAC-SHA256(secret, prevHash + payload)` per decision step. The chain is *keyed*, not just hashed — an attacker who edits a stored record cannot re-seal the chain without the server's secret. **Tamper-proof, not merely tamper-evident.** |
+|  **Non-blocking, live-progress audits** | Analysis runs asynchronously with bounded concurrency; findings stream into the UI as they're discovered, not after a long wait |
+|  **Explainable by design** | Every judgment ships with its reasoning, visibly — nothing is a bare confidence score with no justification |
+|  **One source of truth, two protocols** | Every operation is defined once and exposed identically as both an **MCP tool** and a **REST endpoint** — build for agents and humans from the same code |
+|  **A real product, not a script** | Full auth, a modular dashboard, one-click demo seeding, a replay drawer, live integrity verification, and light/dark themes |
 
 ---
 
